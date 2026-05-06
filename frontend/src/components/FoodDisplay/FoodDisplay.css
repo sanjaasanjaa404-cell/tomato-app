@@ -1,0 +1,38 @@
+.food-display {
+    flex: 1;
+    padding: 20px 0 20px 30px;
+}
+
+.food-display-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.food-display-header h2 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #1a1a1a;
+    margin: 0;
+}
+
+.food-display-header span {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 13px;
+    color: #888;
+    background: #f5f5f5;
+    padding: 4px 12px;
+    border-radius: 20px;
+}
+
+.food-display-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+}

@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Open+Sans:wght@400;500;600&display=swap');
+
+.explore-menu {
+    width: 220px;
+    flex-shrink: 0;
+}
+
+.explore-menu-sidebar h2 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #1a1a1a;
+    padding: 20px 20px 12px;
+    border-bottom: 3px solid #e4002b;
+    margin: 0;
+}
+
+.explore-menu-sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background: #fff;
+    border: 1px solid #eee;
+    border-top: none;
+}
+
+.explore-menu-sidebar ul li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 20px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    cursor: pointer;
+    border-bottom: 1px solid #f0f0f0;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.explore-menu-sidebar ul li:hover {
+    background: #fff5f5;
+    color: #e4002b;
+    padding-left: 26px;
+}
+
+.explore-menu-sidebar ul li.active {
+    background: #e4002b;
+    color: white;
+    border-left: 4px solid #c0001f;
+}
+
+.explore-menu-sidebar ul li.active:hover {
+    background: #c0001f;
+    color: white;
+    padding-left: 20px;
+}
+
+.explore-menu-sidebar ul li img {
+    width: 36px;
+    height: 36px;
+    object-fit: cover;
+    border-radius: 50%;
+}

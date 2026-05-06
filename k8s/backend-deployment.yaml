@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+        image: docker.io/library/dockerbiydaalt-backend:latest
+        imagePullPolicy: Never
+        command: ["/bin/sh", "-c"]
+        args:
+        - "sleep 5 && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+        ports:
+        - containerPort: 8000
+        env:
+        - name: SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: backend-secret
+              key: SECRET_KEY
+        - name: STRIPE_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: backend-secret
+              key: STRIPE_SECRET_KEY
+        - name: STRIPE_PUBLISHABLE_KEY
+          valueFrom:
+            secretKeyRef:
+              name: backend-secret
+              key: STRIPE_PUBLISHABLE_KEY
+        - name: DEBUG
+          value: "True"
+        - name: DB_NAME
+          value: tomatodb
+        - name: DB_USER
+          value: postgres
+        - name: DB_PASSWORD
+          value: postgres
+        - name: DB_HOST
+          value: postgres
+        - name: DB_PORT
+          value: "5432"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+spec:
+  selector:
+    app: backend
+  type: NodePort
+  ports:
+  - port: 8000
+    targetPort: 8000
+    nodePort: 30800

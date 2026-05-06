@@ -1,0 +1,61 @@
+services:
+ 
+  db:
+    image: postgres:15
+    container_name: tomato_db
+    environment:
+      POSTGRES_DB: tomatodb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+ 
+  backend:
+    build: ./backend
+    container_name: tomato_backend
+    env_file:
+      - ./backend/.env
+    command: >
+      sh -c "echo 'DB хүлээж байна...' &&
+             sleep 5 &&
+             python manage.py makemigrations users &&
+             python manage.py makemigrations food &&
+             python manage.py makemigrations orders &&
+             python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./backend:/app
+      - media_data:/app/media
+      - ./frontend/src/assets:/app/seed_images:ro
+    ports:
+      - "8000:8000"
+    environment:
+      DB_HOST: db
+      DB_PORT: "5432"
+    depends_on:
+      db:
+        condition: service_healthy
+ 
+  frontend:
+    build: ./frontend
+    container_name: tomato_frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    depends_on:
+      - backend
+ 
+volumes:
+  postgres_data:
+  media_data:
